@@ -1,19 +1,19 @@
-# OBNINSK DEMONLIST
+# Local Demonlist
 
-Список демонов Geometry Dash и рейтинг игроков Обнинска. Приложение работает на Go и Gin, хранит данные в PostgreSQL и обслуживает HTML, CSS и JavaScript.
+Local Demonlist ranks Geometry Dash Demon levels and tracks player standings for the Obninsk community. The application uses Go and Gin, stores data in PostgreSQL, and serves HTML, CSS, and JavaScript.
 
-## Локальный запуск
+## Local setup
 
-Понадобятся Go 1.25.2 или новее, PostgreSQL и CLI `migrate` с поддержкой PostgreSQL для подготовки новой базы.
+You need Go 1.25.2 or later, PostgreSQL, and the `migrate` CLI with PostgreSQL support to set up a new database.
 
-1. Запусти PostgreSQL и создай пустую базу и пользователя с правами на её схему.
-2. Если `.env` ещё нет, скопируй шаблон. Укажи в `.env` свой `DATABASE_URL`.
+1. Start PostgreSQL. For a new installation, create an empty database and a database user with permission to create objects in its schema.
+2. If you don't already have a `.env` file, copy the template. Set `DATABASE_URL` in `.env` to your PostgreSQL connection string.
 
    ```sh
    test -e .env || cp .env.example .env
    ```
 
-3. Для новой пустой базы примени миграции из корня проекта. Команда загрузит настройки из твоего локального `.env` в отдельной оболочке.
+3. For a new, empty database, run the migrations from the project root. This command loads the settings from your local `.env` in a subshell.
 
    ```sh
    (
@@ -23,24 +23,24 @@
    )
    ```
 
-   Для существующей базы или восстановления из дампа см. [инструкцию по PostgreSQL](docs/database-deployment.md). Там же описано, как добавить необязательные демонстрационные уровни.
+   For an existing database, restoring from a backup, or loading optional demo levels, see the [PostgreSQL setup guide](docs/database-deployment.md).
 
-4. Запусти приложение из корня проекта. Из этой папки оно загружает `templates/` и `static/`.
+4. Start the application from the project root so it can find `templates/` and `static/`.
 
    ```sh
    go run ./cmd
    ```
 
-   Открой [демонлист](http://localhost:8080/demonlist).
+   Open the [demonlist](http://localhost:8080/demonlist) in your browser.
 
-## Проверки
+## Tests
 
 ```sh
 go test ./...
 ```
 
-## Исходники и данные
+## Source code and data
 
-В репозиторий входят исходники, миграции, справочный архив миграций и демонстрационный seed. Реальные данные игроков хранятся в PostgreSQL. Храни `.env` и резервные копии локально или в отдельном закрытом хранилище.
+The repository includes the source code, active migrations, archived migrations for reference, and sample data for development. Player data is stored in PostgreSQL. Keep your `.env` file and database backups in local or private storage.
 
-[Правила демонлиста](docs/rules.md)
+[Demonlist rules](docs/rules.md)
