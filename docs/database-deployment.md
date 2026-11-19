@@ -1,64 +1,48 @@
-# PostgreSQL: новая начальная схема
+# Local Demonlist PostgreSQL setup
 
-GitHub хранит исходники и миграции. Приложение Go и PostgreSQL запускаются на VPS
-или облачной платформе; GitHub Pages не размещает такую БД.
+GitHub hosts the source code and migrations. The Go application and PostgreSQL run on a VPS or cloud platform. GitHub Pages cannot host PostgreSQL.
 
-## Активная история
+## Active migrations
 
-- `migrations/000001_initial_schema.up.sql` создаёт актуальные таблицы, индексы,
-  ограничения, последовательности, функции, триггеры и представление рейтинга.
-- Начальная миграция также заполняет `position_points`: это обязательный справочник
-  начисления очков, а не демонстрационные данные.
-- `migrations/000001_initial_schema.down.sql` удаляет всю схему приложения и данные.
-  Не запускать на рабочей базе для обычного обновления.
-- `seeds/development.sql` — необязательные демонстрационные уровни с синтетическими
-  игровыми ID, только для разработки после применения миграций.
-- `migrations_archive/pre_baseline_20261117/` — предыдущая история для справки;
-  этот каталог не является источником активных миграций.
+- `migrations/000001_initial_schema.up.sql` creates the current tables, indexes, constraints, sequences, functions, triggers, and leaderboard view.
+- The initial migration populates `position_points` with the scoring values required by the application.
+- `migrations/000001_initial_schema.down.sql` drops the entire application schema and its data. Never run it as part of a routine upgrade on a live database.
+- `seeds/development.sql` contains optional demo levels with synthetic game IDs. Use it for development after applying the migrations.
+- `migrations_archive/pre_baseline_20261117/` contains the previous migration history for reference. Keep it outside the active migration path.
 
-Новые изменения оформлять как 000002, 000003 и далее. Опубликованные миграции
-не менять. Применение выполняет один мигратор с таблицей версий.
+Number new migrations `000002`, `000003`, and so on. Leave published migrations unchanged. Use a single migration runner that tracks applied versions in the database.
 
-## Новая пустая база
+## New database
 
-Создать PostgreSQL и базу приложения, настроить DATABASE_URL в окружении сервера.
-При установленном CLI golang-migrate из корня репозитория:
+Set up PostgreSQL, create the application database, and set `DATABASE_URL` in the server environment. With the golang-migrate CLI installed, run this command from the repository root.
 
 ```sh
 migrate -path migrations -database "$DATABASE_URL" up
 ```
 
-Затем запустить приложение. Seed для работы сайта не нужен. Для тестовой БД:
+Then start the application. To load optional demo data into a test database, run the following command.
 
 ```sh
 psql "$DATABASE_URL" -X -v ON_ERROR_STOP=1 --single-transaction -f seeds/development.sql
 ```
 
-## Существующая рабочая база проекта
+## Existing project database
 
-2026-11-17 перед объединением сохранены локально:
+Before consolidating the migrations on November 17, 2026, the project stored these files locally.
 
-- `backups/pre_baseline_20261117.dump` — полный backup в формате pg_dump custom;
-- `backups/pre_baseline_20261117_schema.sql` — исходная схема;
-- старые SQL-файлы в `migrations_archive/pre_baseline_20261117/`.
+- `backups/pre_baseline_20261117.dump`, a full backup in PostgreSQL's custom dump format
+- `backups/pre_baseline_20261117_schema.sql`, the original schema
+- The previous SQL migration files in `migrations_archive/pre_baseline_20261117/`
 
-Структура новой схемы проверена сравнением нормализованных schema-only дампов:
-исключены служебная таблица мигратора, имена тестовых схем и комментарии.
-Проверен цикл up/down/up и интеграционные тесты на отдельных схемах.
+The schema was verified by comparing normalized schema-only dumps, excluding the migration metadata table, test schema names, and comments. The migration was tested with an up/down/up cycle, and integration tests ran against separate schemas.
 
-В рабочей БД исходное значение schema_migrations было 2 (dirty=false), несмотря
-на наличие поздних изменений. После сверки оно приведено к baseline 1 (dirty=false).
-Начальная миграция на рабочей БД повторно не выполнялась; данные сохранены.
+The existing database reported version 2 in `schema_migrations` with `dirty=false`, even though it contained later schema changes. After verification, the migration metadata was set to baseline version 1 with `dirty=false`. The initial migration was left unapplied on that database to preserve its existing schema and data.
 
-Для другой существующей базы нельзя автоматически выставлять версию 1.
-Сначала backup и сравнение её структуры с baseline. Только при совпадении можно
-принять baseline через `migrate ... force 1`. Эта команда меняет только метаданные
-и не создаёт недостающие объекты. Более старую базу необходимо сначала обновить
-по сохранённой старой истории; перед прежней 000006 заполнить реальные игровые ID.
+For any other existing database, make a backup and compare its schema with the baseline before changing the migration version. Use `migrate ... force 1` only if the schema matches. This command changes the migration metadata only. If the database has an older schema, upgrade it using the archived migrations first. Populate the actual in-game level IDs before applying the old migration `000006`.
 
-## Перенос базы с реальными данными
+## Moving a database with existing data
 
-Восстановить полный dump в пустую целевую БД. Не применять baseline перед полным restore:
+Restore the full dump into an empty target database. Apply the baseline only when initializing a fresh database without a full restore.
 
 ```sh
 pg_dump --format=custom --no-owner --no-acl --file=database.dump "$SOURCE_DATABASE_URL"
@@ -66,9 +50,6 @@ pg_restore --exit-on-error --single-transaction --no-owner --no-acl \
   --dbname="$TARGET_DATABASE_URL" database.dump
 ```
 
-Свежий полный dump включает текущие метаданные версии. Резервная копия
-`pre_baseline_20261117.dump` сделана ДО перехода, поэтому содержит прежнюю версию 2;
-после её восстановления потребуется повторная сверка и принятие baseline 1.
+A fresh full dump includes the current migration metadata. The `pre_baseline_20261117.dump` backup predates the consolidation and still contains version 2. After restoring it, verify the schema again before setting the migration metadata to baseline version 1.
 
-Не публиковать `.env`, дампы, сессии и реальные данные пользователей в GitHub.
-Каталог backups/ исключён из Git. Секреты подключения задаются на сервере или в CI.
+Keep `.env`, database dumps, session data, and real user data out of GitHub. Git ignores `backups/`. Set database credentials on the server or through your CI secret store.
