@@ -1,156 +1,100 @@
-# Правила Local Demonlist
+# Local Demonlist Rules
 
-Статус: черновик.
-Последнее обновление: 30 октября 2026 года.
+Status — Draft
 
-Local Demonlist — список уровней Geometry Dash по сложности
-и рейтинг игроков сообщества.
+Last updated — October 30, 2026
 
-Правила определяют порядок добавления уровней, подтверждения
-прохождений и начисления очков.
+Local Demonlist ranks Geometry Dash levels by difficulty and tracks community player standings. These rules explain how levels are added, completions are verified, and points are awarded.
 
-## 1. Участие в рейтинге
+## 1. Eligibility
 
-В рейтинге могут участвовать зарегистрированные игроки сообщества.
+Registered members of the community can participate in the rankings.
 
-Спорные случаи рассматривает администрация индивидуально.
-Для участия не требуется публиковать адрес или документы.
+The moderation team reviews disputed cases individually. Players can participate without publishing an address or identity documents.
 
-Один человек может иметь только один профиль в рейтинге.
-Смена никнейма не обнуляет достижения и очки.
+Each person may have one player profile. Changing a nickname does not reset achievements or points.
 
-## 2. Уровни в списке
+## 2. Eligible levels
 
-В список добавляются уровни категории Demon (unlisted уровни тоже принимаются),
-доступные в Geometry Dash и имеющие подтверждённое прохождение
-хотя бы одного участника рейтинга.
+To qualify, a level must be available in Geometry Dash, rated Demon, and have at least one verified completion by a ranked participant. Unlisted levels are eligible.
 
-Для каждого уровня указываются:
+Each entry includes the following details.
 
-- ID уровня в игре;
-- название;
-- автор;
-- сложность;
-- позиция в списке;
-- верификатор, если известен;
-- ссылка на видео, если доступна.
+- In-game level ID
+- Level name
+- Creator
+- Difficulty
+- Position on the list
+- Verifier, if known
+- Video link, if available
 
-ID уровня в Geometry Dash указывается при наличии
-соответствующего поля на сайте.
+The in-game level ID is recorded if the site has a field for it. The moderation team adds levels and manages their positions.
 
-Добавление уровня и изменение его позиции выполняет
-администрация.
+## 3. Level placement
 
-## 3. Порядок уровней
+The list runs from hardest to easiest. Position 1 is the hardest level on the list.
 
-Уровни располагаются от самого сложного к самому простому.
-Позиция № 1 соответствует самому сложному уровню списка.
+The moderation team considers feedback from players who completed the level, comparisons with nearby levels, gameplay characteristics and consistency, and differences between current versions of the level. The official difficulty rating does not automatically determine placement.
 
-Позиция определяется по совокупности факторов:
+Players may propose a placement change and explain their reasoning. The moderation team makes the final decision.
 
-- мнения игроков, прошедших уровень;
-- сравнение с соседними уровнями;
-- особенности и стабильность игрового процесса;
-- различия между актуальными версиями уровня.
+## 4. Completion requirements
 
-Официальная категория сложности не определяет позицию
-автоматически.
+The first version of the rankings counts only full 100% completions. Partial runs at or above List%, a threshold set by the moderation team, are planned for a future version.
 
-Игроки могут предлагать изменения позиции с объяснением.
-Окончательное решение принимает администрация.
+Players must complete the level from start to finish without cheats. Practice Mode is allowed if the player completes the level from start to finish.
 
-## 4. Требования к прохождению
+The run must use the version covered by the list. Runs on older, modified, or unavailable versions are reviewed separately.
 
-В первой версии рейтинга учитываются только полные
-прохождения на 100%.
-В дальнейшем планируется ввести внесение прогрессов,
-начиная с List% (определяется администрацией).
+## 5. Verification
 
-Прохождение должно быть выполнено:
+To have a completion verified, the player submits the following details.
 
-- от начала до конца уровня;
-- без использования читов;
+- Their nickname
+- The level name or ID
+- A link to a video of the completion
+- The completion date, if known
+- Details about any modifications used, when relevant
 
-Допускается прохождение в режиме практики при условии,
-что уровень был пройден от начала и до конца.
+The video must show the full attempt without cuts. The footage must be clear enough for reviewers to see the gameplay and the completion.
 
-Прохождение должно соответствовать версии уровня,
-которую учитывает список. Случаи прохождения старой,
-изменённой или недоступной версии рассматриваются отдельно.
+The video must remain available for review. If the link stops working, the moderation team may ask for a replacement. If the evidence is insufficient, the team may request the original recording or additional information.
 
-## 5. Подтверждение прохождения
+Submitting a video alone does not guarantee acceptance.
 
-Для подтверждения игрок предоставляет:
+## 6. Modifications and fair play
 
-- свой никнейм;
-- название или ID уровня;
-- ссылку на видео прохождения;
-- дату прохождения, если она известна;
-- пояснение об использованных модификациях, если необходимо.
+The following disqualify a run.
 
-Видео должно показывать полное прохождение без склеек
-внутри попытки. Изображение должно позволять различить
-игровой процесс и завершение уровня.
+- Any form of noclip, including hitbox multipliers
+- Speedhacks. Runs at speeds above 1.00 are considered separately as runs on different versions of the level.
+- Any type of bot
+- Cuts or edits to the successful attempt
 
-Видео должно оставаться доступным для проверки.
-Если ссылка перестала работать, администрация может
-запросить новую.
+The following modifications are allowed.
 
-При недостаточности доказательств администрация вправе
-запросить исходную запись или дополнительные сведения.
+- FPS bypass up to and including 360
+- TPS bypass up to and including 360
+- Click Between Frames
 
-Само наличие видео не гарантирует принятие рекорда.
+Visual modifications and recording tools are allowed if they do not make gameplay easier or interfere with verification. Ask the moderation team about any questionable modifications before submitting a record.
 
-## 6. Модификации и нечестная игра
+## 7. Submission review
 
-Список читов, препятствующих внесению прохождения в лист:
+A submission can be pending review, accepted, or rejected. Points are awarded once the submission is accepted.
 
-- noclip (любые вариации, включая hitbox multiplier);
-- speedhack (случаи прохождения со скоростью >1.00
-    рассматриваются как отдельные версии уровня)
-- любые виды ботов;
-- обрезки и любой монтаж победной попытки;
+If a submission is rejected, the moderation team explains why. The player can address the issues and resubmit or appeal the decision.
 
-Список разрешенных модификаций:
+Review times depend on the number of submissions and how difficult they are to verify.
 
-- FPS bypass (до 360 включительно);
-- TPS bypass (до 360 включительно);
-- Click Between Frames;
+## 8. Scoring
 
-Визуальные модификации и средства записи допустимы,
-если они не упрощают игровой процесс и не мешают проверке.
+Only verified completions earn points. Each level can earn points for a player once, even if they complete it again.
 
-Допустимость спорных модификаций следует уточнить
-у администрации до отправки рекорда.
+Points are based on the level's current position.
 
-## 7. Рассмотрение заявок
-
-Заявка может иметь один из статусов:
-
-- ожидает проверки;
-- принята;
-- отклонена.
-
-До принятия заявки очки не начисляются.
-
-При отклонении администрация указывает причину.
-Игрок может повторно подать заявку, устранив замечания,
-либо обжаловать решение.
-
-Срок проверки зависит от количества заявок
-и сложности проверки.
-
-## 8. Начисление очков
-
-Очки начисляются только за подтверждённые прохождения.
-
-Каждый уровень приносит очки игроку один раз.
-Повторное прохождение не увеличивает сумму очков.
-
-Очки зависят от текущей позиции уровня:
-
-| Позиция | Очки |
-|---------|------|
+| Position | Points |
+|----------|--------|
 | 1       | 1000 |
 | 2       | 950  |
 | 3       | 900  |
@@ -182,78 +126,50 @@ ID уровня в Geometry Dash указывается при наличии
 | 29      | 100  |
 | 30      | 75   |
 
-Уровни ниже 30-й позиции не приносят очков,
-но подтверждённые прохождения сохраняются в профиле.
+Levels below position 30 do not award points. Verified completions of these levels still appear on player profiles.
 
-При изменении позиции уровня очки всех прошедших
-его игроков пересчитываются.
+When a level moves, the scores of all players who completed it are recalculated.
 
-Пример: прохождения уровней на позициях № 1 и № 3
-дают 1000 + 900 = 1900 очков.
+For example, completing the levels at positions 1 and 3 earns 1000 + 900 = 1900 points.
 
-## 9. Рейтинг игроков
+## 9. Player rankings
 
-Место игрока определяется суммой очков
-за все его подтверждённые прохождения.
+A player's rank is based on their total points across all verified completions.
 
-При равенстве очков игроки занимают одинаковое место.
-Следующая позиция учитывает число игроков выше:
-например, 1, 2, 2, 4.
+Players with equal scores share the same rank. The next rank accounts for everyone ahead of it, as in 1, 2, 2, 4.
 
-Игроки без прохождений, приносящих очки,
-не получают места в рейтинге.
+Players without any point-scoring completions do not receive a rank.
 
-## 10. Архив и удаление результатов
+## 10. Archiving and removing results
 
-При выходе уровня за пределы первых 30 позиций
-его прохождения сохраняются, но перестают давать очки.
+If a level falls out of the top 30, its completions stay on record and stop awarding points.
 
-Если уровень исключён из рейтинга или переведён в архив,
-его прохождения сохраняются как история достижений,
-если администрация не установила их недостоверность.
+If a level is removed from the rankings or archived, its completions remain in players' achievement histories unless the moderation team finds them invalid.
 
-Недостоверное прохождение удаляется из зачёта.
-Очки и рейтинг игрока пересчитываются.
+Invalid completions are removed from the standings. The player's score and rank are recalculated.
 
-Причины существенных изменений списка и результатов
-по возможности фиксируются публично.
+When possible, the moderation team publicly records the reasons for significant changes to the list or its results.
 
-## 11. Нарушения
+## 11. Rule violations
 
-В зависимости от характера нарушения администрация может:
+Depending on the violation, the moderation team may take one or more of the following actions.
 
-- отклонить заявку;
-- отменить отдельное прохождение;
-- запросить повторную проверку других результатов;
-- временно ограничить подачу заявок;
-- исключить игрока из рейтинга.
+- Reject a submission
+- Invalidate a completion
+- Request another review of other results
+- Temporarily restrict submissions
+- Remove a player from the rankings
 
-Санкции применяются с учётом доказательств
-и тяжести нарушения.
+The moderation team considers the evidence and the severity of the violation. Submission mistakes alone are not treated as deliberate deception.
 
-Ошибки в заявке сами по себе не считаются
-намеренной попыткой обмана.
+## 12. Appeals
 
-## 12. Обжалование решений
+Players who disagree with a decision can appeal to the moderation team. An appeal should identify the decision, explain why the player believes it was wrong, and include any additional evidence.
 
-Игрок может обратиться к администрации,
-если не согласен с решением.
+A repeat appeal is useful if it raises a new argument or provides new evidence.
 
-В обращении следует указать:
+Appeals contact — [add a link or address].
 
-- какое решение оспаривается;
-- почему игрок считает его ошибочным;
-- какие дополнительные доказательства доступны.
+## 13. Changes to the rules
 
-Повторное обращение по тому же вопросу имеет смысл
-при наличии новых аргументов или доказательств.
-
-Контакт для обращений: [добавить ссылку или адрес].
-
-## 13. Изменение правил
-
-Администрация может уточнять правила по мере развития проекта.
-
-Существенные изменения публикуются с датой вступления в силу.
-Если изменение требует пересмотра старых результатов,
-порядок такого пересмотра объявляется отдельно.
+The moderation team may clarify the rules as the project develops. Significant changes are published with an effective date. If a change requires previous results to be reviewed, the team will announce the review process separately.
