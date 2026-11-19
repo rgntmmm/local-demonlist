@@ -1,0 +1,35 @@
+{{/* Data: {Player {Name string, Rank int, Points int}, Records []{LevelID int, LevelName string, Position int, Points int, VideoURL string}}. Rank=0 means unranked. */}}
+{{define "player.html"}}
+{{template "header" .}}
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/demonlist">Demonlist</a> / <span aria-current="page">Player profile</span></nav>
+<article>
+    <div class="page-heading">
+        <p class="eyebrow">PLAYER PROFILE</p>
+        <img class="profile-avatar" src="/players/{{.Player.ID}}/avatar" alt="Avatar of {{.Player.Name}}" width="96" height="96">
+        <h1>{{.Player.Name}}</h1>
+        <p class="muted">Verified completions on Local Demonlist.</p>
+    </div>
+    <dl class="summary-stats">
+        <div class="panel"><dt>Rank</dt><dd>{{if .Player.Rank}}#{{.Player.Rank}}{{else}}—{{end}}</dd></div>
+        <div class="panel"><dt>Points</dt><dd>{{.Player.Points}}</dd></div>
+        <div class="panel"><dt>Completions</dt><dd>{{len .Records}}</dd></div>
+    </dl>
+    <section class="panel" aria-labelledby="completions-title">
+        <h2 id="completions-title">Completions</h2>
+        {{if .Records}}
+        <div class="table-scroll">
+            <table>
+                <caption class="visually-hidden">Verified completions for {{.Player.Name}}</caption>
+                <thead><tr><th scope="col">Placement</th><th scope="col">Level</th><th scope="col">Result</th><th scope="col">Points</th><th scope="col">Proof</th></tr></thead>
+                <tbody>
+                    {{range .Records}}
+                    <tr><td>{{if .Position}}#{{.Position}}{{else}}Archived{{end}}</td><th scope="row"><a href="/levels/{{.LevelID}}">{{.LevelName}}</a></th><td>100%</td><td>{{.Points}}</td><td>{{if .VideoURL}}<a href="{{.VideoURL}}" target="_blank" rel="noopener noreferrer">Video ↗</a>{{else}}—{{end}}</td></tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+        {{else}}<p class="empty-state">This player has no verified completions yet.</p>{{end}}
+    </section>
+</article>
+{{template "footer" .}}
+{{end}}

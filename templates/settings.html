@@ -1,0 +1,29 @@
+{{define "settings.html"}}
+{{template "header" .}}
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/players/{{.AccountID}}">My Profile</a> / Settings</nav>
+<section class="level-form-page">
+ <div class="page-heading"><p class="eyebrow">YOUR ACCOUNT</p><h1>User settings</h1><p class="muted">Manage your public profile and password.</p></div>
+ {{if .Error}}<div class="form-error" role="alert">{{.Error}}</div>{{end}}
+ {{if .Saved}}<p class="panel" role="status">Your changes have been saved.</p>{{end}}
+ <form class="panel level-form settings-section" action="/settings/avatar" method="post" enctype="multipart/form-data">
+  <h2>Profile avatar</h2>
+  <img class="profile-avatar" src="/players/{{.AccountID}}/avatar" alt="Your current avatar" width="96" height="96">
+  <div class="form-field"><label for="avatar">Upload an image</label><input id="avatar" name="avatar" type="file" accept="image/png,image/jpeg" required aria-describedby="avatar-help"><p id="avatar-help" class="field-hint">PNG or JPEG, up to 5 MB and 2048 × 2048 pixels. Your avatar is visible to everyone.</p></div>
+  <button class="button" type="submit">Save avatar</button>
+ </form>
+ <form class="panel level-form settings-section" action="/settings/nickname" method="post">
+  <h2>Nickname</h2>
+  <div class="form-field"><label for="display-name">Public nickname</label><input id="display-name" name="display_name" value="{{.DisplayName}}" maxlength="64" required><p class="field-hint">Updates your profile, completions and levels you verified. Your sign-in username stays the same.</p></div>
+  <button class="button" type="submit">Save nickname</button>
+ </form>
+ <form class="panel level-form settings-section" action="/settings/password" method="post">
+  <h2>Change password</h2>
+  <div class="form-field"><label for="current-password">Current password</label><input id="current-password" name="current_password" type="password" autocomplete="current-password" required></div>
+  <div class="form-field"><label for="new-password">New password</label><input id="new-password" name="new_password" type="password" autocomplete="new-password" minlength="8" required aria-describedby="password-help"></div>
+  <div class="form-field"><label for="confirm-password">Confirm new password</label><input id="confirm-password" name="confirm_password" type="password" autocomplete="new-password" minlength="8" required></div>
+  <p class="field-hint" id="password-help">At least 8 characters, at most 72 bytes. After saving, sign in again on your devices.</p>
+  <button class="button" type="submit">Change password</button>
+ </form>
+</section>
+{{template "footer" .}}
+{{end}}

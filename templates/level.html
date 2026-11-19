@@ -1,0 +1,58 @@
+{{/* Data: {Level models.Level, Records []{PlayerID int, PlayerName string, VideoURL string}}. */}}
+{{define "level.html"}}
+{{template "header" .}}
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/demonlist">Demonlist</a> / <span aria-current="page">{{.Level.Name}}</span></nav>
+<article>
+    <div class="page-heading">
+        <p class="eyebrow">{{if .Level.Position}}PLACEMENT #{{.Level.Position}}{{else}}ARCHIVED{{end}}</p>
+        <h1>{{.Level.Name}}</h1>
+        <p class="muted">Creator: {{.Level.Author}}</p>
+    </div>
+    {{if and .IsAdmin .Level.Position}}
+    <div class="form-actions">
+        <a class="button" href="/levels/{{.Level.ID}}/edit">Edit level or placement</a>
+        <form action="/levels/{{.Level.ID}}/archive" method="post">
+            <button class="button" type="submit">Archive level</button>
+        </form>
+    </div>
+    {{end}}
+    {{if .IsAdmin}}
+    <details class="panel">
+        <summary>Delete level</summary>
+        <p>Only levels without submissions or completions can be deleted. Archive this level to preserve its history.</p>
+        <form action="/levels/{{.Level.ID}}/delete" method="post">
+            <button class="button" type="submit">Permanently delete level</button>
+        </form>
+    </details>
+    {{end}}
+    {{if .Level.Icon}}
+    <figure class="level-hero">
+        <img src="{{.Level.Icon}}" alt="Level icon for {{.Level.Name}}">
+    </figure>
+    {{end}}
+    <div class="detail-grid">
+        <section class="panel" aria-labelledby="level-details">
+            <h2 id="level-details">Level details</h2>
+            <dl class="stats">
+                <div><dt>Game ID</dt><dd>{{.Level.GameID}}</dd></div>
+                <div><dt>Placement</dt><dd>{{if .Level.Position}}#{{.Level.Position}}{{else}}Archived{{end}}</dd></div>
+                <div><dt>Difficulty</dt><dd>{{.Level.Difficulty}} Demon</dd></div>
+                <div><dt>Completion points</dt><dd>{{.Level.Points}}</dd></div>
+                <div><dt>Verifier</dt><dd>{{if .Level.Verifier}}{{.Level.Verifier}}{{else}}Unknown{{end}}</dd></div>
+            </dl>
+            {{if .Level.VideoURL}}<a class="button" href="{{.Level.VideoURL}}" target="_blank" rel="noopener noreferrer">Watch video ↗</a>{{else}}<p class="muted">No video available.</p>{{end}}
+        </section>
+        <section class="panel" aria-labelledby="records-title">
+            <h2 id="records-title">Verified completions</h2>
+            <ul class="record-list">
+                {{range .Records}}
+                <li><a href="/players/{{.PlayerID}}">{{.PlayerName}}</a><div class="record-result"><span class="badge">100%</span>{{if .VideoURL}}<a href="{{.VideoURL}}" target="_blank" rel="noopener noreferrer">Video ↗</a>{{end}}</div></li>
+                {{else}}
+                <li class="empty-state">No verified completions yet.</li>
+                {{end}}
+            </ul>
+        </section>
+    </div>
+</article>
+{{template "footer" .}}
+{{end}}

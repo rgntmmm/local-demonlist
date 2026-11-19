@@ -1,0 +1,68 @@
+{{/* Data: {Form models.CreateLevelRequest, Error string, CSRFToken string}.
+     POST /levels expects form fields; the handler must bind and validate them.
+     Provide zero-value Form, Error and CSRFToken on the initial render. */}}
+{{define "add_level.html"}}
+{{template "header" .}}
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/demonlist">Demonlist</a> / <span aria-current="page">{{if .EditID}}Edit level{{else}}Add level{{end}}</span></nav>
+<section class="level-form-page" aria-labelledby="page-title">
+    <div class="page-heading">
+        <p class="eyebrow">LIST MANAGEMENT</p>
+        <h1 id="page-title">{{if .EditID}}Save level{{else}}Add level{{end}}</h1>
+        <p class="muted">{{if .EditID}}Update the level details or placement.{{else}}Enter the new level details.{{end}} Fields marked with an asterisk are required.</p>
+    </div>
+    <form class="panel level-form" action="{{if .EditID}}/levels/{{.EditID}}/edit{{else}}/levels{{end}}" method="post">
+        {{if .CSRFToken}}<input type="hidden" name="csrf_token" value="{{.CSRFToken}}">{{end}}
+        {{if .Error}}<div class="form-error" role="alert"><strong>Could not save the level.</strong><p>{{.Error}}</p></div>{{end}}
+        <div class="form-field">
+            <label for="level-game-id">Game ID *</label>
+            <input id="level-game-id" name="game_id" type="number" min="1" max="9007199254740991" step="1" {{if .Form.GameID}}value="{{.Form.GameID}}"{{end}} required placeholder="Enter the ID from Geometry Dash">
+            <p class="field-hint">The level ID in Geometry Dash.</p>
+        </div>
+        <div class="form-field">
+            <label for="level-name">Level name *</label>
+            <input id="level-name" name="name" type="text" value="{{.Form.Name}}" maxlength="255" required placeholder="e.g. Bloodbath">
+        </div>
+        <div class="form-field">
+            <label for="level-author">Creator *</label>
+            <input id="level-author" name="author" type="text" value="{{.Form.Author}}" maxlength="255" required placeholder="Creator name">
+        </div>
+        <div class="form-row">
+            <div class="form-field">
+                <label for="level-difficulty">Difficulty *</label>
+                <select id="level-difficulty" name="difficulty" required>
+                    <option value="" {{if not .Form.Difficulty}}selected{{end}} disabled>Choose a difficulty</option>
+                    <option value="Easy" {{if eq .Form.Difficulty "Easy"}}selected{{end}}>Easy Demon</option>
+                    <option value="Medium" {{if eq .Form.Difficulty "Medium"}}selected{{end}}>Medium Demon</option>
+                    <option value="Hard" {{if eq .Form.Difficulty "Hard"}}selected{{end}}>Hard Demon</option>
+                    <option value="Insane" {{if eq .Form.Difficulty "Insane"}}selected{{end}}>Insane Demon</option>
+                    <option value="Extreme" {{if eq .Form.Difficulty "Extreme"}}selected{{end}}>Extreme Demon</option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="level-position">Placement *</label>
+                <input id="level-position" name="position" type="number" min="1" step="1" {{if gt .Form.Position 0}}value="{{.Form.Position}}"{{end}} required placeholder="1" aria-describedby="position-hint">
+                <p class="field-hint" id="position-hint">#1 is the highest placement. Placement determines points.</p>
+            </div>
+        </div>
+        <div class="form-field">
+            <label for="level-video">Video URL</label>
+            <input id="level-video" name="video_url" type="url" value="{{.Form.VideoURL}}" placeholder="https://www.youtube.com/watch?v=…" aria-describedby="video-hint">
+            <p class="field-hint" id="video-hint">Optional. Enter the full URL of the completion video.</p>
+        </div>
+        <div class="form-field">
+            <label for="level-verifier">Verifier</label>
+            <input id="level-verifier" name="verifier" type="text" value="{{.Form.Verifier}}" maxlength="64">
+        </div>
+        <div class="form-field">
+            <label for="level-icon">Icon URL</label>
+            <input id="level-icon" name="icon" type="url" value="{{.Form.Icon}}" placeholder="https://example.com/icon.png">
+        </div>
+        {{if .Preview}}<p class="field-hint" id="save-hint">Saving is unavailable in preview mode.</p>{{end}}
+        <div class="form-actions">
+            <button class="button" type="submit" {{if .Preview}}disabled aria-describedby="save-hint"{{end}}>{{if .EditID}}Save level{{else}}Add level{{end}}</button>
+            <a href="/demonlist">Cancel</a>
+        </div>
+    </form>
+</section>
+{{template "footer" .}}
+{{end}}

@@ -1,0 +1,24 @@
+{{define "login.html"}}
+{{template "header" .}}
+{{if .PasswordChanged}}<p class="panel" role="status">Password changed. Sign in with your new password.</p>{{end}}
+<section class="auth-page" aria-labelledby="auth-title">
+    <div class="page-heading"><h1 id="auth-title">Sign In</h1></div>
+    <form class="panel level-form" method="post" action="/login">
+        {{if .Registered}}<p role="status">Account created. Sign in with your username and password.</p>{{end}}
+        {{if .Error}}<p class="form-error" role="alert">{{.Error}}</p>{{end}}
+        <div class="form-field">
+            <label for="login">Username</label>
+            <input id="login" name="login" type="text" value="{{.Login}}" autocomplete="username" required maxlength="32" autocapitalize="none" spellcheck="false">
+        </div>
+        <div class="form-field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+        </div>
+        <div class="form-actions">
+            <button class="button" type="submit">Sign In</button>
+            <a href="/register">Create an account</a>
+        </div>
+    </form>
+</section>
+{{template "footer" .}}
+{{end}}

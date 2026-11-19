@@ -1,0 +1,1 @@
+UPDATE levels SET position = position + 1 WHERE position >= $1

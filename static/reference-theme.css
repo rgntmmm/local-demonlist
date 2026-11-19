@@ -1,0 +1,214 @@
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Rubik:wght@400;500;600;700&display=swap");
+
+:root {
+    color-scheme: dark;
+    --ink: #f4f5fa;
+    --muted: #b8bdd0;
+    --line: #dce1f4;
+    --edge: #505873;
+    --surface: #202331;
+    --accent: #c2b5ff;
+    --gradient: linear-gradient(115deg, #243f85, #50358e 70%, #623c9e);
+    --display: "Chakra Petch", "Rubik", system-ui, sans-serif;
+}
+
+body {
+    background: #13151f;
+    color: var(--ink);
+    font-family: "Rubik", system-ui, sans-serif;
+}
+
+.container {
+    position: relative;
+    border: 1px solid var(--edge);
+    background: repeating-linear-gradient(0deg, transparent 0 89px, #ffffff0a 89px 90px),
+        linear-gradient(#1a1e2c, #13151f);
+}
+.container::after {
+    position: absolute;
+    inset: 6px;
+    border: 1px solid #dce1f445;
+    pointer-events: none;
+    content: "";
+}
+
+header {
+    background: #191c2a;
+    border-color: var(--edge);
+}
+.logo, h1, h2, .position, .summary-stats dd {
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: .025em;
+    text-shadow: 2px 2px #0c0913;
+}
+.logo:hover { color: var(--accent); }
+.navigation a, .account-nav a, .account-nav button,
+.account-nav .header-primary {
+    background: #191c2a;
+    border-color: var(--line);
+    color: var(--ink);
+    font-family: var(--display);
+}
+.navigation a:hover, .account-nav a:hover, .account-nav button:hover,
+.account-nav .header-primary:hover { background: #303850; color: white; }
+
+a { color: var(--accent); }
+a:hover { color: white; }
+a:focus-visible, button:focus-visible,
+.form-field input:focus-visible, .form-field select:focus-visible,
+.search-field:focus-visible { outline: 2px solid #c2b5ff; outline-offset: 3px; }
+
+.eyebrow, .position, .points, .summary-stats dd { color: #e8d3ff; }
+.muted, dt, thead th, .field-hint, .empty-state { color: var(--muted); }
+.form-field label, .auth-page .field-hint { color: #fff; }
+.search-field, .form-field input, .form-field select,
+.list-controls input[type="search"], .list-controls select {
+    color: var(--ink);
+    background: #191c2a;
+    border-color: var(--edge);
+}
+input::placeholder { color: #bfb4ca; }
+.search-submit { color: var(--ink); }
+.search-submit:hover { background: #303850; }
+
+.panel, .preview-notice {
+    background: var(--surface);
+    border: 1px solid var(--edge);
+    border-radius: 12px;
+    color: var(--ink);
+}
+.stats > div, .record-list > li, th, td { border-color: #ffffff30; }
+.badge { background: #181221; color: #f1deff; border: 1px solid #ffffff55; }
+.button {
+    background: var(--gradient);
+    border: 1px solid var(--line);
+    color: white;
+    font-family: var(--display);
+}
+.form-actions button { border: 1px solid var(--line); }
+.button:hover { background: #53327c; }
+.form-error, .review-list .button-reject {
+    background: #482635;
+    border-color: #ecaaba;
+    color: #ffe0e7;
+}
+.review-list .button-reject:hover { background: #633448; }
+
+.listing-frame { position: relative; }
+.level-card {
+    --card-color: #382861;
+    background: linear-gradient(95deg, #0b0910 6%, var(--card-color));
+    border-color: var(--line);
+    border-radius: 10px;
+}
+.level-card:nth-child(3n + 2) { --card-color: #243d70; }
+.level-card:nth-child(3n + 3) { --card-color: #244852; }
+.level-card a { color: white; }
+.level-card a:hover { color: var(--accent); }
+.level-card .level-icon { border: 1px solid var(--line); border-radius: 0; }
+
+.listing-decorations {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.listing-arrows, .listing-glyph {
+    position: absolute;
+    top: 66.667%;
+    transform: translateY(-50%);
+}
+
+.listing-frame { padding-inline: clamp(24px, 8vw, 100px); }
+.listing-arrows {
+    left: 10px;
+    display: grid;
+    gap: 5px;
+}
+.listing-arrows i {
+    position: relative;
+    width: clamp(15px, 4vw, 38px);
+    aspect-ratio: 38 / 36;
+    background: var(--line);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.listing-arrows i::after {
+    position: absolute;
+    inset: 11% 16% 11% 5%;
+    background: #302e35;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    content: "";
+}
+.listing-glyph {
+    right: 10px;
+    width: clamp(19px, 5vw, 46px);
+    aspect-ratio: 1;
+    border: 2px solid var(--line);
+}
+.listing-glyph::before, .listing-glyph::after {
+    position: absolute;
+    border: 1px solid var(--line);
+    content: "";
+}
+.listing-glyph::before { inset: 12% 17% 12% 56%; }
+.listing-glyph::after {
+    inset: 18% 58% 18% 12%;
+    background: linear-gradient(var(--line), var(--line)) center / 100% 1px no-repeat;
+}
+
+.footer-emblem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 34px auto 0;
+    height: 84px;
+    pointer-events: none;
+}
+.emblem-wing {
+    width: 52px;
+    height: 76px;
+    background: repeating-linear-gradient(90deg, var(--line) 0 3px, transparent 3px 6px);
+    clip-path: polygon(0 32%, 9% 32%, 9% 16%, 24% 16%, 24% 6%, 38% 6%, 38% 0, 52% 0, 52% 20%, 65% 20%, 65% 10%, 76% 10%, 76% 31%, 89% 31%, 89% 23%, 100% 23%, 100% 100%, 89% 100%, 89% 71%, 77% 71%, 77% 85%, 65% 85%, 65% 58%, 53% 58%, 53% 74%, 40% 74%, 40% 53%, 24% 53%, 24% 69%, 10% 69%, 10% 59%, 0 59%);
+}
+.emblem-wing:last-child { transform: scaleX(-1); }
+.emblem-core { position: relative; width: 36px; height: 36px; margin-top: 22px; border: 2px solid var(--line); }
+.emblem-core::before {
+    position: absolute;
+    inset: -24px 0 auto;
+    height: 9px;
+    border: 2px solid var(--line);
+    border-radius: 50%;
+    content: "";
+}
+.emblem-core i, .emblem-core i::after {
+    position: absolute;
+    inset: 5px;
+    border: 2px solid var(--line);
+    transform: rotate(45deg);
+    content: "";
+}
+footer { border-top: 1px solid var(--line); background: #191c2a; }
+
+@media (max-width: 600px) {
+    .list-controls label { min-width: 0; }
+    .list-controls input[type="search"] { width: 100%; }
+}
+
+/* Catalog filters and account actions */
+.account-nav .header-primary {
+    background: var(--gradient);
+    border-color: #8d7cc1;
+}
+.account-nav .header-primary:hover { background: #514084; }
+.list-controls {
+    padding: 14px 16px;
+    border: 1px solid var(--edge);
+    border-radius: 12px;
+    background: var(--surface);
+}
+.page-heading h1 { text-shadow: none; }
+.level-card { border-color: #a6a4c080; }
+.level-card:hover { border-color: var(--accent); }

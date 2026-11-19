@@ -1,0 +1,22 @@
+{{define "archive.html"}}
+{{template "header" .}}
+<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/demonlist">Demonlist</a> / <span aria-current="page">Archive</span></nav>
+<section aria-labelledby="page-title">
+ <div class="page-heading"><p class="eyebrow">GEOMETRY DASH</p><h1 id="page-title">Archive</h1><p class="muted">Archived levels and their completion history.</p>{{if .IsAdmin}}<p class="muted">Restored levels are added to the end of the Demonlist.</p>{{end}}</div>
+ <div class="listing-frame">
+ <ul class="level-list archive-list" aria-label="Archived levels">
+ {{range .Levels}}
+  <li class="level-card archive-card">
+   {{if $.IsAdmin}}<form class="archive-restore" action="/levels/{{.ID}}/restore" method="post"><button class="button" type="submit" aria-label="Return {{.Name}} to list">Return to list</button></form>{{end}}
+   {{if .Icon}}<img class="level-icon" src="{{.Icon}}" alt="" width="64" height="64" loading="lazy">{{end}}
+   <div class="level-info"><h2><a href="/levels/{{.ID}}">{{.Name}}</a></h2><p class="muted">Creator: {{.Author}}</p>{{if .Verifier}}<p class="muted">Verifier: {{.Verifier}}</p>{{end}}</div>
+   <div class="level-meta"><span class="badge">{{.Difficulty}} Demon</span><span class="muted">Archived</span></div>
+  </li>
+ {{else}}
+  <li class="empty-state">No archived levels. <a href="/demonlist">Back to Demonlist</a></li>
+ {{end}}
+ </ul>
+ </div>
+</section>
+{{template "footer" .}}
+{{end}}

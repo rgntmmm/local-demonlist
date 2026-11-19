@@ -1,0 +1,48 @@
+{{/* Data: {Players []{ID int, Name string, Rank int, Points int, Completions int}, Preview bool}.
+     Players must be ordered by rank by the handler. */}}
+{{define "leaderboard.html"}}
+{{template "header" .}}
+<section aria-labelledby="page-title"{{if .Players}} data-filter-list{{end}}>
+    <div class="page-heading">
+        <p class="eyebrow">PLAYERS</p>
+        <h1 id="page-title">Leaderboard</h1>
+        <p class="muted">Players ranked by points earned from verified completions.</p>
+    </div>
+    <div class="panel">
+        {{if .Players}}
+        <div class="list-controls" data-filter-controls hidden>
+            <label>Search players
+                <input type="search" placeholder="Display name">
+            </label>
+            <p class="muted list-status" role="status"></p>
+        </div>
+        <div class="table-scroll">
+            <table>
+                <caption class="visually-hidden">Local Demonlist player rankings</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Rank</th>
+                        <th scope="col">Player</th>
+                        <th scope="col">Points</th>
+                        <th scope="col">Completions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range .Players}}
+                    <tr data-filter-text="{{.Name}}">
+                        <td><span class="position">{{if .Rank}}#{{.Rank}}{{else}}—{{end}}</span></td>
+                        <th scope="row"><a href="/players/{{.ID}}">{{.Name}}</a></th>
+                        <td class="points">{{.Points}}</td>
+                        <td>{{.Completions}}</td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+        {{else}}
+        <p class="empty-state">No players with verified completions yet.</p>
+        {{end}}
+    </div>
+</section>
+{{template "footer" .}}
+{{end}}

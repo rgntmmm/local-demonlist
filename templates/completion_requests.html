@@ -1,0 +1,52 @@
+{{/*
+Data: {
+    Requests []{ID int64, PlayerID int64, PlayerName string, LevelID int, LevelName string, VideoURL string, SubmittedAt string},
+    Error string, Notice string, AccountID int64, IsAdmin bool
+}.
+Requests contains pending completions. SubmittedAt is a formatted date.
+Forms post decision=approved or decision=rejected to /admin/completion-requests/:id/review.
+The route must require admin access and update only pending requests.
+*/}}
+{{define "completion_requests.html"}}
+{{template "header" .}}
+<section aria-labelledby="page-title">
+    <div class="page-heading">
+        <h1 id="page-title">Record Submissions</h1>
+        <p class="muted">Awaiting review: {{len .Requests}}</p>
+    </div>
+
+    {{if .Error}}<p class="form-error" role="alert">{{.Error}}</p>{{end}}
+    {{if .Notice}}<p role="status">{{.Notice}}</p>{{end}}
+
+    <ul class="review-list" aria-label="Review queue">
+        {{range .Requests}}
+        <li class="panel">
+            <h2><a href="/levels/{{.LevelID}}">{{.LevelName}}</a></h2>
+            <dl class="stats">
+                <div><dt>Game ID</dt><dd>{{.GameID}}</dd></div>
+                <div><dt>Attempts</dt><dd>{{if .Attempts}}{{.Attempts}}{{else}}Not provided{{end}}</dd></div>
+                <div><dt>Contact ({{.ContactType}})</dt><dd>{{if .Contact}}{{.Contact}}{{else}}Not provided{{end}}</dd></div>
+                <div><dt>Player</dt><dd><a href="/players/{{.PlayerID}}">{{.PlayerName}}</a></dd></div>
+                <div><dt>Submitted</dt><dd>{{.SubmittedAt}}</dd></div>
+                <div>
+                    <dt>Proof</dt>
+                    <dd>{{if .VideoURL}}<a href="{{.VideoURL}}" target="_blank" rel="noopener noreferrer">Watch video ↗</a>{{else}}No video submitted{{end}}</dd>
+                </div>
+            </dl>
+
+            {{if and $.IsAdmin (eq .PlayerID $.AccountID)}}
+            <p class="muted">Another administrator must review your submission.</p>
+            {{else if $.IsAdmin}}
+            <form class="form-actions" action="/admin/completion-requests/{{.ID}}/review" method="post">
+                <button class="button" type="submit" name="decision" value="approved">Approve</button>
+                <button class="button button-reject" type="submit" name="decision" value="rejected">Reject</button>
+            </form>
+            {{end}}
+        </li>
+        {{else}}
+        <li class="panel empty-state">No submissions awaiting review.</li>
+        {{end}}
+    </ul>
+</section>
+{{template "footer" .}}
+{{end}}

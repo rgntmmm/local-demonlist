@@ -1,0 +1,29 @@
+{{define "register.html"}}
+{{template "header" .}}
+<section class="auth-page" aria-labelledby="auth-title">
+    <div class="page-heading"><h1 id="auth-title">Sign Up</h1></div>
+    <form class="panel level-form" method="post" action="/register">
+        {{if .Error}}<p class="form-error" role="alert">{{.Error}}</p>{{end}}
+        <div class="form-field">
+            <label for="login">Username</label>
+            <input id="login" name="login" type="text" value="{{.Login}}" autocomplete="username" required minlength="3" maxlength="32" pattern="[A-Za-z0-9_]{3,32}" autocapitalize="none" spellcheck="false" aria-describedby="login-hint">
+            <p class="field-hint" id="login-hint">Use 3 to 32 ASCII letters, digits, or underscores.</p>
+        </div>
+        <div class="form-field">
+            <label for="display-name">Display name</label>
+            <input id="display-name" name="display_name" type="text" value="{{.DisplayName}}" autocomplete="nickname" required maxlength="64" aria-describedby="nickname-hint">
+            <p class="field-hint" id="nickname-hint">Shown on your profile and the leaderboard.</p>
+        </div>
+        <div class="form-field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="new-password" required minlength="8" aria-describedby="password-hint">
+            <p class="field-hint" id="password-hint">At least 8 characters and no more than 72 bytes.</p>
+        </div>
+        <div class="form-actions">
+            <button class="button" type="submit">Create an account</button>
+            <a href="/login">Already have an account?</a>
+        </div>
+    </form>
+</section>
+{{template "footer" .}}
+{{end}}

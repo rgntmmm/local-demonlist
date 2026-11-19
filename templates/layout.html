@@ -1,0 +1,65 @@
+{{define "header"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Demonlist</title>
+    <link rel="stylesheet" href="/static/styles.css?v=3">
+    <link rel="stylesheet" href="/static/reference-theme.css?v=3">
+    <script src="/static/js/lists.js" defer></script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="header-inner">
+            <a class="logo" href="/">LOCAL DEMONLIST</a>
+            <nav class="navigation" aria-label="Main navigation">
+                <a href="/demonlist">Demonlist</a>
+                <a href="/leaderboard">Leaderboard</a>
+                {{if .HasArchive}}<a href="/archive">Archive</a>{{end}}
+ {{if .IsAdmin}}<a href="/admin/completion-requests">Record Submissions</a>{{end}}
+                {{if or .Preview .IsAdmin}}<a href="/levels/new">Add level</a>{{end}}
+            </nav>
+            <div>
+                {{if .AccountID}}
+                <a class="button" href="/completion-requests/new">Submit a record</a>
+                {{else}}
+                <a class="button" href="/login">Sign in to submit a record</a>
+                {{end}}
+            </div>
+            <nav class="account-nav" aria-label="Account">
+                {{if .AccountID}}
+                <a class="profile-link header-primary" href="/players/{{.AccountID}}">
+                    <img src="/players/{{.AccountID}}/avatar" alt="" width="24" height="24">
+                    My Profile
+                </a>
+                <a class="settings-link" href="/settings" aria-label="User settings">Settings</a>
+                <form action="/logout" method="post"><button type="submit">Sign Out</button></form>
+                {{else}}
+                <a href="/login">Sign In</a>
+                <a class="header-primary" href="/register">Sign Up</a>
+                {{end}}
+            </nav>
+        </div>
+    </header>
+    <main class="content" id="main-content">
+        {{if .Preview}}<p class="preview-notice" role="note">Preview mode uses sample levels, players, and completions. <a href="/players/1">Sample player profile</a></p>{{end}}
+{{end}}
+
+{{define "footer"}}
+        <div class="footer-emblem" aria-hidden="true">
+            <span class="emblem-wing"></span>
+            <span class="emblem-core"><i></i></span>
+            <span class="emblem-wing"></span>
+        </div>
+    </main>
+    <footer>
+        <div class="foot">
+            <p>Local Demonlist · Geometry Dash levels and player rankings.</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
+{{end}}

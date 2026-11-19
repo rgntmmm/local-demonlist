@@ -1,0 +1,44 @@
+{{define "submit_completion.html"}}
+{{template "header" .}}
+<section class="level-form-page" aria-labelledby="submission-title">
+    <div class="page-heading">
+        <h1 id="submission-title">Submit a record</h1>
+    </div>
+    {{if .SubmissionSent}}
+    <div class="panel">
+        <p role="status">Submission sent. Your record is awaiting administrator review.</p>
+        <div class="form-actions">
+            <a href="/completion-requests/new">Submit another record</a>
+            <a href="/demonlist">Back to Demonlist</a>
+        </div>
+    </div>
+    {{else}}
+    <form class="panel level-form" action="/completion-requests" method="post">
+        {{if .SubmissionError}}<p class="form-error" role="alert">{{.SubmissionError}}</p>{{end}}
+        <label class="form-field">Level name or Geometry Dash ID
+            <input name="level" value="{{.Submission.Level}}" maxlength="255" required>
+        </label>
+        <label class="form-field">Attempts
+            <input name="attempts" type="number" min="1" max="2147483647" value="{{if .Submission.Attempts}}{{.Submission.Attempts}}{{end}}" required>
+        </label>
+        <label class="form-field">Completion video{{if .IsAdmin}} (optional){{end}}
+            <input name="video_url" type="url" maxlength="2048" value="{{.Submission.VideoURL}}" {{if not .IsAdmin}}required{{end}}>
+        </label>
+        <label class="form-field">Contact type
+            <select name="contact_type" required>
+                <option value="email" {{if ne .Submission.ContactType "discord"}}selected{{end}}>Email</option>
+                <option value="discord" {{if eq .Submission.ContactType "discord"}}selected{{end}}>Discord</option>
+            </select>
+        </label>
+        <label class="form-field">Email address or Discord account
+            <input name="contact" value="{{.Submission.Contact}}" maxlength="254" required>
+        </label>
+        <div class="form-actions">
+            <button class="button" type="submit">Send for review</button>
+            <a href="/demonlist">Back to Demonlist</a>
+        </div>
+    </form>
+    {{end}}
+</section>
+{{template "footer" .}}
+{{end}}

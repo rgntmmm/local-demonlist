@@ -1,0 +1,9 @@
+{{define "delete_level_error.html"}}
+{{template "header" .}}
+<section class="panel">
+    <h1>This level has submissions or completions</h1>
+    <p>Archive the level to preserve player history.</p>
+    <a class="button" href="/levels/{{.LevelID}}">Back to level</a>
+</section>
+{{template "footer" .}}
+{{end}}

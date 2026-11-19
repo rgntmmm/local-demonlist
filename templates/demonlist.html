@@ -1,0 +1,57 @@
+{{/* Data: {Levels []models.Level, Query string}. */}}
+{{define "demonlist.html"}}
+{{template "header" .}}
+<div class="listing-decorations" aria-hidden="true">
+    <span class="listing-arrows" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="listing-glyph" aria-hidden="true"></span>
+</div>
+<section aria-labelledby="page-title"{{if .Levels}} data-filter-list{{end}}>
+    <div class="page-heading">
+        <p class="eyebrow">GEOMETRY DASH</p>
+        <h1 id="page-title">Demonlist</h1>
+        <p class="muted">Geometry Dash demons ranked by difficulty.</p>
+    </div>
+    {{if .Query}}<p class="search-summary">Search results: <strong>{{.Query}}</strong>. <a href="/demonlist">Clear search</a></p>{{end}}
+    {{if .Levels}}
+    <div class="list-controls" data-filter-controls hidden>
+        <label>Filter levels
+            <input type="search" placeholder="Name or creator">
+        </label>
+        <label>Difficulty
+            <select>
+                <option value="">All difficulties</option>
+                <option value="Easy">Easy Demon</option>
+                <option value="Medium">Medium Demon</option>
+                <option value="Hard">Hard Demon</option>
+                <option value="Insane">Insane Demon</option>
+                <option value="Extreme">Extreme Demon</option>
+            </select>
+        </label>
+        <label class="compact-toggle"><input type="checkbox"> Compact view</label>
+        <p class="muted list-status" role="status"></p>
+    </div>
+    {{end}}
+    <div class="listing-frame">
+    <ol class="level-list" aria-label="Levels by difficulty">
+        {{range .Levels}}
+        <li class="level-card" value="{{.Position}}" data-filter-text="{{.Name}} {{.Author}}" data-difficulty="{{.Difficulty}}">
+            <span class="position">#{{.Position}}</span>
+            {{if .Icon}}<img class="level-icon" src="{{.Icon}}" alt="" width="64" height="64" loading="lazy">{{end}}
+            <div class="level-info">
+                <h2><a href="/levels/{{.ID}}">{{.Name}}</a></h2>
+                <p class="muted">Creator: {{.Author}}</p>
+                {{if .Verifier}}<p class="muted">Verifier: {{.Verifier}}</p>{{end}}
+            </div>
+            <div class="level-meta">
+                <span class="badge">{{.Difficulty}} Demon</span>
+                <span class="points">{{.Points}} points</span>
+            </div>
+        </li>
+        {{else}}
+        <li class="empty-state">{{if .Query}}No matching levels. Try another search.{{else}}No levels have been added yet.{{end}}</li>
+        {{end}}
+    </ol>
+    </div>
+</section>
+{{template "footer" .}}
+{{end}}
