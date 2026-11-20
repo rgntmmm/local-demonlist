@@ -325,6 +325,7 @@ footer { border-top: 1px solid var(--line); background: #191c2a; }
 #mobile-menu nav { display: grid; align-content: start; gap: 12px; }
 #mobile-menu nav { justify-content: stretch; gap: 6px; }
 #mobile-menu .button, #mobile-menu .account-nav button { box-sizing: border-box; width: 100%; }
+#mobile-menu .button { text-align: center; }
 .drawer-close { justify-self: start; }
 #mobile-menu::backdrop { background: #090b14bb; }
 html:has(#mobile-menu[open]) { overflow: hidden; }
