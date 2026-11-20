@@ -1,8 +1,8 @@
 # Local Demonlist Rules
 
-Status — Draft
+Status — In Use
 
-Last updated — October 30, 2026
+Last updated — November 20, 2026
 
 Local Demonlist ranks Geometry Dash levels by difficulty and tracks community player standings. These rules explain how levels are added, completions are verified, and points are awarded.
 
@@ -16,7 +16,7 @@ Each person may have one player profile. Changing a nickname does not reset achi
 
 ## 2. Eligible levels
 
-To qualify, a level must be available in Geometry Dash, rated Demon, and have at least one verified completion by a ranked participant. Unlisted levels are eligible.
+To qualify, a level must be available in Geometry Dash (there must be at least one existing copy, unpublished levels are allowed) and have at least one verified completion by a ranked participant.
 
 Each entry includes the following details.
 
@@ -25,8 +25,8 @@ Each entry includes the following details.
 - Creator
 - Difficulty
 - Position on the list
-- Verifier, if known
-- Video link, if available
+- Verifier
+- Video link (for admins: if available)
 
 The in-game level ID is recorded if the site has a field for it. The moderation team adds levels and manages their positions.
 
@@ -52,8 +52,8 @@ To have a completion verified, the player submits the following details.
 
 - Their nickname
 - The level name or ID
-- A link to a video of the completion
-- The completion date, if known
+- Attempts
+- A link to a video of the completion (except admins, their submittion may not contain this kind of proof)
 - Details about any modifications used, when relevant
 
 The video must show the full attempt without cuts. The footage must be clear enough for reviewers to see the gameplay and the completion.
