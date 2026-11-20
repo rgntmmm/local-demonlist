@@ -22,3 +22,6 @@
 /backups/
 *.dump
 *.backup
+
+# DevFiles
+FutureVersions.md
