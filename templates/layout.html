@@ -1,3 +1,5 @@
+{{define "menu-icon"}}<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>{{end}}
+
 {{define "header"}}
 <!DOCTYPE html>
 <html lang="en">
@@ -6,41 +8,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Local Demonlist</title>
     <link rel="stylesheet" href="/static/styles.css?v=3">
-    <link rel="stylesheet" href="/static/reference-theme.css?v=3">
+    <link rel="stylesheet" href="/static/reference-theme.css?v=9">
+    <script src="/static/js/navigation.js?v=2" defer></script>
     <script src="/static/js/lists.js" defer></script>
 </head>
 <body>
 <div class="container">
     <header>
         <div class="header-inner">
+            <button type="button" class="menu-toggle" aria-label="Open menu" aria-controls="mobile-menu" aria-haspopup="dialog" aria-expanded="false" hidden>
+                {{template "menu-icon"}}
+            </button>
             <a class="logo" href="/">LOCAL DEMONLIST</a>
-            <nav class="navigation" aria-label="Main navigation">
-                <a href="/demonlist">Demonlist</a>
-                <a href="/leaderboard">Leaderboard</a>
-                {{if .HasArchive}}<a href="/archive">Archive</a>{{end}}
- {{if .IsAdmin}}<a href="/admin/completion-requests">Record Submissions</a>{{end}}
-                {{if or .Preview .IsAdmin}}<a href="/levels/new">Add level</a>{{end}}
-            </nav>
-            <div>
-                {{if .AccountID}}
-                <a class="button" href="/completion-requests/new">Submit a record</a>
-                {{else}}
-                <a class="button" href="/login">Sign in to submit a record</a>
-                {{end}}
+            <div class="header-links">
+                <nav class="navigation" aria-label="Main navigation">
+                    <a href="/demonlist">Demonlist</a>
+                    <a href="/leaderboard">Leaderboard</a>
+                    {{if .HasArchive}}<a href="/archive">Archive</a>{{end}}
+                    {{if .IsAdmin}}<a href="/admin/completion-requests">Record Submissions</a>{{end}}
+                    {{if or .Preview .IsAdmin}}<a href="/levels/new">Add level</a>{{end}}
+                </nav>
+                <div>
+                    {{if .AccountID}}
+                    <a class="button" href="/completion-requests/new">Submit a record</a>
+                    {{else}}
+                    <a class="button" href="/login">Sign in to submit a record</a>
+                    {{end}}
+                </div>
+                <nav class="account-nav" aria-label="Account">
+                    {{if .AccountID}}
+                    <a class="profile-link header-primary" href="/players/{{.AccountID}}">
+                        <img src="/players/{{.AccountID}}/avatar" alt="" width="24" height="24">
+                        My Profile
+                    </a>
+                    <a class="settings-link" href="/settings" aria-label="User settings">Settings</a>
+                    <form action="/logout" method="post"><button type="submit">Sign Out</button></form>
+                    {{else}}
+                    <a href="/login">Sign In</a>
+                    <a class="header-primary" href="/register">Sign Up</a>
+                    {{end}}
+                </nav>
             </div>
-            <nav class="account-nav" aria-label="Account">
-                {{if .AccountID}}
-                <a class="profile-link header-primary" href="/players/{{.AccountID}}">
-                    <img src="/players/{{.AccountID}}/avatar" alt="" width="24" height="24">
-                    My Profile
-                </a>
-                <a class="settings-link" href="/settings" aria-label="User settings">Settings</a>
-                <form action="/logout" method="post"><button type="submit">Sign Out</button></form>
-                {{else}}
-                <a href="/login">Sign In</a>
-                <a class="header-primary" href="/register">Sign Up</a>
-                {{end}}
-            </nav>
+            <dialog id="mobile-menu" aria-label="Site menu">
+                <button type="button" class="drawer-close" aria-label="Close menu" autofocus>{{template "menu-icon"}}</button>
+            </dialog>
         </div>
     </header>
     <main class="content" id="main-content">
@@ -50,13 +61,14 @@
 {{define "footer"}}
         <div class="footer-emblem" aria-hidden="true">
             <span class="emblem-wing"></span>
-            <span class="emblem-core"><i></i></span>
+            <span class="emblem-core"><img src="/static/images/footer-icon-cutout.png" width="56" height="56" alt=""></span>
             <span class="emblem-wing"></span>
         </div>
     </main>
     <footer>
         <div class="foot">
             <p>Local Demonlist · Geometry Dash levels and player rankings.</p>
+            <p>For any questions, contact <strong>rgntmmm</strong> on Discord.</p>
         </div>
     </footer>
 </div>

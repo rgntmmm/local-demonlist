@@ -38,7 +38,7 @@
             <span class="position">#{{.Position}}</span>
             {{if .Icon}}<img class="level-icon" src="{{.Icon}}" alt="" width="64" height="64" loading="lazy">{{end}}
             <div class="level-info">
-                <h2><a href="/levels/{{.ID}}">{{.Name}}</a></h2>
+                <h2><a href="/levels/{{.ID}}" title="Creator: {{.Author}}{{if .Verifier}} · Verifier: {{.Verifier}}{{end}} · {{.Difficulty}} Demon · {{.Points}} points">{{.Name}}</a></h2>
                 <p class="muted">Creator: {{.Author}}</p>
                 {{if .Verifier}}<p class="muted">Verifier: {{.Verifier}}</p>{{end}}
             </div>

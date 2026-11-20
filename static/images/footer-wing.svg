@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 80">
+  <defs>
+    <linearGradient id="plumage" x2=".4" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="white"/>
+      <stop offset=".55" stop-color="#f2f4fb"/>
+      <stop offset="1" stop-color="#b7c0d2"/>
+    </linearGradient>
+  </defs>
+  <!-- The long flight feathers fan out from the wrist. -->
+  <g fill="url(#plumage)" stroke="#616b81" stroke-width=".9" stroke-linejoin="round">
+    <path d="M90 63Q81 45 61 39Q30 29 4 4Q11 26 36 43Q63 61 90 70Z"/>
+    <path d="M86 62Q65 46 44 40Q21 32 5 20Q14 39 38 51Q58 62 86 71Z"/>
+    <path d="M86 65Q67 52 44 48Q26 44 11 36Q23 52 43 59Q66 67 86 72Z"/>
+    <path d="M86 68Q67 58 48 57Q34 55 22 51Q33 63 52 67Q70 71 86 73Z"/>
+    <path d="M87 70Q69 65 53 65L35 63Q48 74 69 74L88 75Z"/>
+    <!-- Shorter overlapping coverts round off the shoulder. -->
+    <path d="M91 73Q95 55 81 46Q72 40 59 36Q37 28 18 13Q25 28 41 38L34 35Q42 46 57 50L48 48Q56 57 70 59L62 59Q70 67 81 66Q82 72 91 73Z"/>
+    <path d="M90 66Q91 54 80 49Q69 44 58 42Q48 39 41 34Q48 43 61 47L55 46Q61 53 72 54L67 54Q73 60 81 59Q84 64 90 66Z"/>
+  </g>
+  <path d="M85 55Q78 49 67 47M31 35Q20 28 14 21M36 48Q25 43 20 39M48 60L37 57"
+        fill="none" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+</svg>

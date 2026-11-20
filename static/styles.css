@@ -260,10 +260,7 @@ thead th { color: #5b6572; font-size: 13px; }
 .list-controls .compact-toggle { display: flex; align-items: center; min-height: 40px; }
 .list-status { flex-basis: 100%; }
 [data-filter-controls][hidden], [data-filter-text][hidden] { display: none; }
-.compact-list .level-list { gap: 6px; }
-.compact-list .level-card { padding: 8px 14px; gap: 10px; }
-.compact-list .level-icon { display: none; }
-.compact-list .level-card h2, .compact-list .position { font-size: 16px; }
+
 
 .auth-page { max-width: 480px; margin-inline: auto; }
 

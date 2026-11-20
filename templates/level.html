@@ -8,22 +8,23 @@
         <h1>{{.Level.Name}}</h1>
         <p class="muted">Creator: {{.Level.Author}}</p>
     </div>
-    {{if and .IsAdmin .Level.Position}}
-    <div class="form-actions">
-        <a class="button" href="/levels/{{.Level.ID}}/edit">Edit level or placement</a>
-        <form action="/levels/{{.Level.ID}}/archive" method="post">
-            <button class="button" type="submit">Archive level</button>
+    {{if .IsAdmin}}
+    <div class="level-management">
+        <div class="form-actions">
+            {{if .Level.Position}}
+            <a class="button" href="/levels/{{.Level.ID}}/edit">Edit level or placement</a>
+            <form action="/levels/{{.Level.ID}}/archive" method="post">
+                <button class="button" type="submit">Archive level</button>
+            </form>
+            {{end}}
+            <button class="button delete-toggle" type="button" aria-expanded="false" aria-controls="delete-confirmation">Delete level</button>
+        </div>
+        <form id="delete-confirmation" class="panel delete-confirmation" action="/levels/{{.Level.ID}}/delete" method="post" hidden>
+            <p>Only levels without submissions or completions can be deleted. This action is permanent.</p>
+            <button class="button delete-toggle" type="submit">Permanently delete level</button>
         </form>
     </div>
-    {{end}}
-    {{if .IsAdmin}}
-    <details class="panel">
-        <summary>Delete level</summary>
-        <p>Only levels without submissions or completions can be deleted. Archive this level to preserve its history.</p>
-        <form action="/levels/{{.Level.ID}}/delete" method="post">
-            <button class="button" type="submit">Permanently delete level</button>
-        </form>
-    </details>
+    <script src="/static/js/level-actions.js" defer></script>
     {{end}}
     {{if .Level.Icon}}
     <figure class="level-hero">
