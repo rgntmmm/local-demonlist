@@ -12,6 +12,6 @@ Enjoy the site!
 
 - Updated footer icon (was replaced with Michi's icon)
 - Updated level delete button (for admins)
-- Add my contacts to footer (you can ask any questions about record submission, site dev etc.)
+- Added my contacts to footer (you can ask any questions about record submission, site dev etc.)
 - Updated mobile version of the site
 - Updated compact view of the demonlist (now it is actually compact)
