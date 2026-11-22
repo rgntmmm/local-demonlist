@@ -1,6 +1,6 @@
 # Local Demonlist
 
-Local Demonlist ranks Geometry Dash Demon levels and tracks player standings for the Obninsk community. The application uses Go and Gin, stores data in PostgreSQL, and serves HTML, CSS, and JavaScript.
+Local Demonlist ranks Geometry Dash Demon levels and tracks player standings for the local community. The application uses Go and Gin, stores data in PostgreSQL, and serves HTML, CSS, and JavaScript.
 
 ## Local setup
 
