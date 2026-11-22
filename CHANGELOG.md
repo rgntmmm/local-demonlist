@@ -8,6 +8,8 @@ Enjoy the site!
 
 ## Update 1.0.1. What's new? (Nov 20, 2026)
 
+### Cosmetic changes #1
+
 - Updated footer icon (was replaced with Michi's icon)
 - Updated level delete button (for admins)
 - Added my contacts to footer (you can ask any questions about record submission, site dev etc.)
@@ -16,4 +18,12 @@ Enjoy the site!
 
 ## Update 1.0.2. What's new? (Nov 20, 2026)
 
+### Cosmetic changes #2
+
 - Small bugfixes
+
+## Update 1.0.3. What's new? (Nov 22, 2026)
+
+### Optimization changes #1
+
+- Recent data is now stored in the cache for 20 minutes (even after session's termination)

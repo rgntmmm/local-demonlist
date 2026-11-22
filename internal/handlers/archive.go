@@ -65,6 +65,7 @@ func restoreLevelHandler(pool *pgxpool.Pool) gin.HandlerFunc {
 			pageError(c, err)
 			return
 		}
+		markLevelsChanged(c)
 		c.Redirect(http.StatusSeeOther, "/archive")
 	}
 }

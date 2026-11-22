@@ -63,8 +63,14 @@ func RegisterDatabasePages(r *gin.Engine, pool *pgxpool.Pool) {
 	r.GET("/", func(c *gin.Context) {
 		c.Redirect(http.StatusFound, "/demonlist")
 	})
+	r.GET("/api/levels", ListLevelsHandler(pool))
 	r.GET("/demonlist", func(c *gin.Context) {
 		query := strings.TrimSpace(c.Query("query"))
+		if c.Query("view") != "server" {
+			version, _ := c.Cookie("levels_version")
+			renderPage(c, http.StatusOK, "demonlist.html", gin.H{"ClientLevels": true, "Query": query, "Version": version})
+			return
+		}
 		rows, err := pool.Query(c.Request.Context(), queries.Pages("levels"), nil, query)
 		if err != nil {
 			pageError(c, err)
