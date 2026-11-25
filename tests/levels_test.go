@@ -290,16 +290,26 @@ func TestLevelManagementDatabase(t *testing.T) {
 	if err != nil || name != "Updated" || author != "New author" || verifier != "Verifier" || icon != "https://example.com/icon.png" {
 		t.Fatalf("metadata not saved: %s %s %s %s %v", name, author, verifier, icon, err)
 	}
-	if w := request("POST", "/levels/1/delete", ""); w.Code != 409 {
+	if w := request("POST", "/levels/1/delete", ""); w.Code != 303 {
 		t.Fatalf("delete with completion: %d", w.Code)
 	}
-	// Remove the verifier assignment and its automatic completion before deletion.
-	edit.Set("verifier", "")
-	if w := request("POST", "/levels/2/edit", edit.Encode()); w.Code != 303 {
-		t.Fatalf("clear verifier: %d", w.Code)
+	var verifierID int64
+	if err := pool.QueryRow(ctx, "SELECT verifier_player_id FROM levels WHERE id=2").Scan(&verifierID); err != nil {
+		t.Fatal(err)
+	}
+	// Pending submissions are deleted alongside automatically approved completions.
+	if _, err := pool.Exec(ctx, "INSERT INTO player_completions(player_id,level_id) VALUES ($1,2)", adminID); err != nil {
+		t.Fatal(err)
 	}
 	if w := request("POST", "/levels/2/delete", ""); w.Code != 303 {
 		t.Fatalf("delete active: %d %s", w.Code, w.Body.String())
+	}
+	var remaining int
+	if err := pool.QueryRow(ctx, "SELECT count(*) FROM player_completions WHERE level_id IN (1,2)").Scan(&remaining); err != nil || remaining != 0 {
+		t.Fatalf("deleted level completions remain: %d %v", remaining, err)
+	}
+	if err := pool.QueryRow(ctx, "SELECT total_points,completed_count FROM player_leaderboard WHERE player_id=$1", verifierID).Scan(&points, &completions); err != nil || points != 0 || completions != 0 {
+		t.Fatalf("deleted level still awards points: %d %d %v", points, completions, err)
 	}
 	if w := request("POST", "/levels/2/delete", ""); w.Code != 404 {
 		t.Fatalf("repeat delete: %d", w.Code)

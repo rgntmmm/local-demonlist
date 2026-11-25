@@ -30,8 +30,14 @@ Enjoy the site!
 
 ## Update 1.0.4. What's new? (Nov 25, 2026)
 
-### Optimization changes #2
+### Bugfix #1
 
 - Fixed the cache bug when user could not get fresh list updates because of the cache
 
 Now the site checks if the new version of the list is available and, if it is, returns fresh data straight from database (and not from cache).
+
+## Update 1.0.5. What's new? (Nov 25, 2026)
+
+### Bugfix #2
+
+- Some admin features fixed

@@ -20,7 +20,7 @@
             <button class="button delete-toggle" type="button" aria-expanded="false" aria-controls="delete-confirmation">Delete level</button>
         </div>
         <form id="delete-confirmation" class="panel delete-confirmation" action="/levels/{{.Level.ID}}/delete" method="post" hidden>
-            <p>Only levels without submissions or completions can be deleted. This action is permanent.</p>
+            <p>This permanently deletes the level and all its submissions and completions. Players lose the points earned for this level. List positions and rankings are recalculated.</p>
             <button class="button delete-toggle" type="submit">Permanently delete level</button>
         </form>
     </div>

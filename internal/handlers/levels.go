@@ -277,7 +277,7 @@ func archiveLevelHandler(pool *pgxpool.Pool) gin.HandlerFunc {
 	}
 }
 
-// deleteLevelHandler deletes levels without dependent completions.
+// deleteLevelHandler removes the level and its completions in one transaction.
 func deleteLevelHandler(pool *pgxpool.Pool) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id, ok := levelID(c)
@@ -296,19 +296,21 @@ func deleteLevelHandler(pool *pgxpool.Pool) gin.HandlerFunc {
 			return
 		}
 		var position *int
-		err = tx.QueryRow(ctx, "DELETE FROM levels WHERE id=$1 RETURNING position", id).Scan(&position)
+		err = tx.QueryRow(ctx, "SELECT position FROM levels WHERE id=$1 FOR UPDATE", id).Scan(&position)
 		if errors.Is(err, pgx.ErrNoRows) {
 			c.String(http.StatusNotFound, "Level not found")
 			return
 		}
-		var pgErr *pgconn.PgError
-		if errors.As(err, &pgErr) && pgErr.Code == "23503" {
-			// Release locks before rendering the conflict page.
-			tx.Rollback(ctx)
-			renderPage(c, http.StatusConflict, "delete_level_error.html", gin.H{"LevelID": id})
+		if err != nil {
+			pageError(c, err)
 			return
 		}
-		if err != nil {
+		// The row lock prevents new foreign-key references until commit.
+		if _, err = tx.Exec(ctx, "DELETE FROM player_completions WHERE level_id=$1", id); err != nil {
+			pageError(c, err)
+			return
+		}
+		if _, err = tx.Exec(ctx, "DELETE FROM levels WHERE id=$1", id); err != nil {
 			pageError(c, err)
 			return
 		}
