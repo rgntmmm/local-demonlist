@@ -5,6 +5,7 @@ GitHub hosts the source code and migrations. The Go application and PostgreSQL r
 ## Active migrations
 
 - `migrations/000001_initial_schema.up.sql` creates the current tables, indexes, constraints, sequences, functions, triggers, and leaderboard view.
+- Apply `000002_level_list_revision.up.sql` before deploying the list cache update. It tracks changes to levels and position points in the same transaction as each write.
 - The initial migration populates `position_points` with the scoring values required by the application.
 - `migrations/000001_initial_schema.down.sql` drops the entire application schema and its data. Never run it as part of a routine upgrade on a live database.
 - `seeds/development.sql` contains optional demo levels with synthetic game IDs. Use it for development after applying the migrations.

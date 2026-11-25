@@ -51,6 +51,12 @@ func pageError(c *gin.Context, err error) {
 	c.String(http.StatusInternalServerError, "Could not load page data")
 }
 
+func listRevision(c *gin.Context, pool *pgxpool.Pool) (string, error) {
+	var revision string
+	err := pool.QueryRow(c.Request.Context(), "SELECT revision::text FROM level_list_revision WHERE singleton").Scan(&revision)
+	return revision, err
+}
+
 func RegisterDatabasePages(r *gin.Engine, pool *pgxpool.Pool) {
 	r.Use(middleware.CrossOriginProtection(), middleware.SessionMiddleware(pool))
 	r.Use(func(c *gin.Context) { c.Set("pagePool", pool); c.Next() })
@@ -64,10 +70,23 @@ func RegisterDatabasePages(r *gin.Engine, pool *pgxpool.Pool) {
 		c.Redirect(http.StatusFound, "/demonlist")
 	})
 	r.GET("/api/levels", ListLevelsHandler(pool))
+	r.GET("/api/levels/version", func(c *gin.Context) {
+		middleware.NoStore(c)
+		version, err := listRevision(c, pool)
+		if err != nil {
+			pageError(c, err)
+			return
+		}
+		c.String(http.StatusOK, version)
+	})
 	r.GET("/demonlist", func(c *gin.Context) {
 		query := strings.TrimSpace(c.Query("query"))
 		if c.Query("view") != "server" {
-			version, _ := c.Cookie("levels_version")
+			version, err := listRevision(c, pool)
+			if err != nil {
+				pageError(c, err)
+				return
+			}
 			renderPage(c, http.StatusOK, "demonlist.html", gin.H{"ClientLevels": true, "Query": query, "Version": version})
 			return
 		}

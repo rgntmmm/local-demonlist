@@ -6,7 +6,6 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5"
@@ -17,10 +16,6 @@ import (
 	"local-demonlist/internal/models"
 	"local-demonlist/internal/queries"
 )
-
-func markLevelsChanged(c *gin.Context) {
-	c.SetCookie("levels_version", strconv.FormatInt(time.Now().UnixNano(), 10), 20*60, "/", "", c.Request.TLS != nil, true)
-}
 
 func ListLevelsHandler(pool *pgxpool.Pool) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -224,7 +219,6 @@ func saveLevelHandler(pool *pgxpool.Pool, editing bool) gin.HandlerFunc {
 			pageError(c, err)
 			return
 		}
-		markLevelsChanged(c)
 		if jsonRequest {
 			status := http.StatusCreated
 			if editing {
@@ -279,7 +273,6 @@ func archiveLevelHandler(pool *pgxpool.Pool) gin.HandlerFunc {
 			pageError(c, err)
 			return
 		}
-		markLevelsChanged(c)
 		c.Redirect(http.StatusSeeOther, "/levels/"+strconv.FormatInt(id, 10))
 	}
 }
@@ -329,7 +322,6 @@ func deleteLevelHandler(pool *pgxpool.Pool) gin.HandlerFunc {
 			pageError(c, err)
 			return
 		}
-		markLevelsChanged(c)
 		c.Redirect(http.StatusSeeOther, "/demonlist")
 	}
 }

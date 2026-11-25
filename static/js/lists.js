@@ -4,10 +4,7 @@ function enableFilters(list) {
     const difficulty = controls.querySelector("select");
     const compact = controls.querySelector("input[type=checkbox]");
     const status = controls.querySelector("[role=status]");
-    const entries = Array.from(list.querySelectorAll("[data-filter-text]"), (element) => ({
-        element,
-        text: element.dataset.filterText.toLowerCase(),
-    }));
+    let entries = [];
 
     function updateList() {
         const query = search.value.trim().toLowerCase();
@@ -31,8 +28,16 @@ function enableFilters(list) {
     search.addEventListener("input", updateList);
     difficulty?.addEventListener("change", updateList);
     compact?.addEventListener("change", updateList);
-    controls.hidden = false;
-    updateList();
+    function refreshEntries() {
+        entries = Array.from(list.querySelectorAll("[data-filter-text]"), element => ({
+            element,
+            text: element.dataset.filterText.toLowerCase(),
+        }));
+        controls.hidden = entries.length === 0;
+        updateList();
+    }
+    refreshEntries();
+    return refreshEntries;
 }
 
 const levelsCacheKey = "demonlist:levels:v1";
@@ -94,27 +99,55 @@ function levelCard(template, level) {
     return card;
 }
 
-async function showLevels(list) {
+function showLevels(list) {
     const items = list.querySelector(".level-list");
     const status = items.firstElementChild;
-    try {
-        const levels = await loadLevels(list.dataset.levelVersion);
-        const query = list.dataset.query.toLowerCase();
-        const matches = levels.filter(level => level.Name.toLowerCase().includes(query) ||
-            level.Author.toLowerCase().includes(query));
-        if (matches.length) {
-            const template = list.querySelector("#level-card");
-            const cards = document.createDocumentFragment();
-            for (const level of matches) cards.append(levelCard(template, level));
-            items.replaceChildren(cards);
-            enableFilters(list);
-        } else {
-            status.textContent = query ? "No matching levels. Try another search." : "No levels have been added yet.";
+    const fallback = list.querySelector("[data-server-list]");
+    const refreshFilters = enableFilters(list);
+    let displayedVersion;
+    let busy = false;
+
+    async function refresh(version) {
+        if (busy || document.hidden) return;
+        busy = true;
+        try {
+            if (!version) {
+                const response = await fetch("/api/levels/version", { cache: "no-store" });
+                if (!response.ok) throw new Error("Could not check list version");
+                version = await response.text();
+            }
+            if (version === displayedVersion) {
+                fallback.hidden = true;
+                return;
+            }
+            const levels = await loadLevels(version);
+            const query = list.dataset.query.toLowerCase();
+            const matches = levels.filter(level => level.Name.toLowerCase().includes(query) ||
+                level.Author.toLowerCase().includes(query));
+            if (matches.length) {
+                const template = list.querySelector("#level-card");
+                const cards = document.createDocumentFragment();
+                for (const level of matches) cards.append(levelCard(template, level));
+                items.replaceChildren(cards);
+            } else {
+                items.replaceChildren(status);
+                status.textContent = query ? "No matching levels. Try another search." : "No levels have been added yet.";
+            }
+            refreshFilters();
+            fallback.hidden = true;
+            displayedVersion = version;
+        } catch {
+            if (!displayedVersion) status.textContent = "Could not load levels.";
+            fallback.hidden = false;
+        } finally {
+            busy = false;
         }
-        list.querySelector("[data-server-list]").hidden = true;
-    } catch {
-        status.textContent = "Could not load levels.";
     }
+
+    refresh(list.dataset.levelVersion);
+    document.addEventListener("visibilitychange", () => refresh());
+    window.addEventListener("pageshow", event => { if (event.persisted) refresh(); });
+    window.setInterval(() => refresh(), 30_000);
 }
 
 for (const list of document.querySelectorAll("[data-filter-list]")) {
